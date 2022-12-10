@@ -46,15 +46,29 @@ if rav1e_argument_string != "":
     command = add_argument(command, f"-v=\"{rav1e_argument_string} --no-scene-detection --tiles 2\"")
 
 command = add_argument(command, f"-i \"{input_file}\" -o \"{output_file}\" --temp \"{tempdir}\"")
-       
 
 sys.stdout.write("Starting av1an... Check new console window for progress\n")
 sys.stdout.write("Arguments: " + str(command) + "\n")
 sys.stdout.flush()
 
-process = subprocess.run(command, shell=False, creationflags=subprocess.CREATE_NEW_CONSOLE)
+process = subprocess.Popen(command, shell=False, creationflags=subprocess.CREATE_NEW_CONSOLE)
 
-if process.returncode != 0:
+# Registering exit handler
+import signal
+import atexit
+import os
+
+def handle_terminate():
+    process.terminate()
+    process.kill()
+    exit(0)
+    
+atexit.register(handle_terminate)
+signal.signal(signal.SIGTERM, handle_terminate)
+signal.signal(signal.SIGINT, handle_terminate)
+
+
+if process.wait() != 0:
     print(process.stderr)
     print("Error occurred when transcoding with av1an. Check logs")
     exit(1)
