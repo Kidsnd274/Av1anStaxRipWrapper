@@ -46,7 +46,7 @@ if parser_args.workers is not None:
     command = add_argument(command, f"--workers {parser_args.workers}")
 
 if rav1e_argument_string != "":
-    command = add_argument(command, f"-v=\"{rav1e_argument_string} --no-scene-detection --tiles 2\"")
+    command = add_argument(command, f"-v=\"{rav1e_argument_string} --no-scene-detection\"")
 
 command = add_argument(command, f"-i \"{input_file}\" -o \"{output_file}\" --temp \"{tempdir}\"")
        
