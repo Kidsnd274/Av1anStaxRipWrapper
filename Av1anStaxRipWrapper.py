@@ -31,7 +31,7 @@ av1an_exec = "av1an.exe"
 command = av1an_exec
 command = add_argument(command, "--verbose -y --resume -a=\"-an\" --pix-format yuv420p10le")
 if parser_args.arguments is not None:
-    command = add_argument(command, parser_args.args)
+    command = add_argument(command, parser_args.arguments)
 command = add_argument(command, f"-i \"{input_file}\" -o \"{output_file}\" --temp \"{tempdir}\"")
 
 sys.stdout.write("Starting av1an... Check new console window for progress\n")
