@@ -10,7 +10,8 @@ parser.add_argument('-t', dest="tempdir", type=str, required=True, help="Temp Di
 parser.add_argument('--quantizer', type=str, required=False, help="Quantizer argument for rav1e") # Quantizer (0-255), smaller values are higher quality (default: 100)
 parser.add_argument('--speed', type=str, required=False, help="Speed argument for rav1e") # Speed level 0-10 (0 is best quality, 10 is fastest) (default: 6)
 parser.add_argument('--workers', type=str, required=False, help="Number of workers to spawn [0 = automatic]")
-parser.add_argument('--tiles', type=str, required=False, help="Number of tiles")
+parser.add_argument('--tiles', type=str, required=False, help="Number of tiles (to rav1e)")
+parser.add_argument('--threads', type=str, required=False, help="Number of threads (to rav1e)")
 parser_args = parser.parse_args()
 
 input_file = parser_args.input
@@ -34,6 +35,8 @@ if parser_args.quantizer is not None:
     rav1e_argument_string = add_argument(rav1e_argument_string, f"--quantizer {parser_args.quantizer}")
 if parser_args.tiles is not None:
     rav1e_argument_string = add_argument(rav1e_argument_string, f"--tiles {parser_args.tiles}")
+if parser_args.threads is not None:
+    rav1e_argument_string = add_argument(rav1e_argument_string, f"--threads {parser_args.threads}")
 
 
 # Assuming av1an is stored in PATH
