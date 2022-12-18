@@ -43,7 +43,7 @@ if parser_args.threads is not None:
 av1an_exec = "av1an.exe"
 
 command = av1an_exec
-command = add_argument(command, "--verbose -y --resume -f=\"-an\" -e rav1e --pix-format yuv420p10le")
+command = add_argument(command, "--verbose -y --resume -a=\"-an\" -e rav1e --pix-format yuv420p10le")
 
 if parser_args.workers is not None:
     command = add_argument(command, f"--workers {parser_args.workers}")
