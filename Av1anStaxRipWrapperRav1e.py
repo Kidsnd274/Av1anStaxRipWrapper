@@ -7,9 +7,11 @@ parser = argparse.ArgumentParser(description="av1an cmd wrapper for StaxRip")
 parser.add_argument('-i', dest="input", type=str, required=True, help="Input File")
 parser.add_argument('-o', dest="output", type=str, required=True, help="Output File")
 parser.add_argument('-t', dest="tempdir", type=str, required=True, help="Temp Directory")
+parser.add_argument('--workers', type=str, required=False, help="Number of workers to spawn [0 = automatic]")
+parser.add_argument('--photon-noise', dest="photon_noise", type=str, required=False, help="Generates a photon noise table and applies it using grain synthesis [strength: 0-64] (disabled by default)")
+# Rav1e arguments
 parser.add_argument('--quantizer', type=str, required=False, help="Quantizer argument for rav1e") # Quantizer (0-255), smaller values are higher quality (default: 100)
 parser.add_argument('--speed', type=str, required=False, help="Speed argument for rav1e") # Speed level 0-10 (0 is best quality, 10 is fastest) (default: 6)
-parser.add_argument('--workers', type=str, required=False, help="Number of workers to spawn [0 = automatic]")
 parser.add_argument('--tiles', type=str, required=False, help="Number of tiles (to rav1e)")
 parser.add_argument('--threads', type=str, required=False, help="Number of threads (to rav1e)")
 parser_args = parser.parse_args()
@@ -47,6 +49,9 @@ command = add_argument(command, "--verbose -y --resume -a=\"-an\" -e rav1e --pix
 
 if parser_args.workers is not None:
     command = add_argument(command, f"--workers {parser_args.workers}")
+    
+if parser_args.photon_noise is not None:
+    command = add_argument(command, f"--photon-noise {parser_args.photon_noise}")
 
 if rav1e_argument_string != "":
     command = add_argument(command, f"-v=\"{rav1e_argument_string} --no-scene-detection\"")
