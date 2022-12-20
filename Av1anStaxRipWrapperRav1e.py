@@ -9,6 +9,7 @@ parser.add_argument('-o', dest="output", type=str, required=True, help="Output F
 parser.add_argument('-t', dest="tempdir", type=str, required=True, help="Temp Directory")
 parser.add_argument('--workers', type=str, required=False, help="Number of workers to spawn [0 = automatic]")
 parser.add_argument('--photon-noise', dest="photon_noise", type=str, required=False, help="Generates a photon noise table and applies it using grain synthesis [strength: 0-64] (disabled by default)")
+parser.add_argument('--sc-downscale-height', dest="sc_downscale_height", type=str, required=False, help="Optional downscaling for scene detection. By default, no downscaling is performed.")
 # Rav1e arguments
 parser.add_argument('--quantizer', type=str, required=False, help="Quantizer argument for rav1e") # Quantizer (0-255), smaller values are higher quality (default: 100)
 parser.add_argument('--speed', type=str, required=False, help="Speed argument for rav1e") # Speed level 0-10 (0 is best quality, 10 is fastest) (default: 6)
@@ -52,6 +53,9 @@ if parser_args.workers is not None:
     
 if parser_args.photon_noise is not None:
     command = add_argument(command, f"--photon-noise {parser_args.photon_noise}")
+    
+if parser_args.sc_downscale_height is not None:
+    command = add_argument(command, f"--sc-downscale-height {parser_args.sc_downscale_height}")
 
 if rav1e_argument_string != "":
     command = add_argument(command, f"-v=\"{rav1e_argument_string} --no-scene-detection\"")
