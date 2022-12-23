@@ -54,9 +54,9 @@ if thread_detection: # Checking for new Intel architecture
     import psutil
     logical_count = psutil.cpu_count(logical = True)
     physical_count = psutil.cpu_count(logical = False)
-    if (logical_count / physical_count) % 1 == 0:
+    if (logical_count / physical_count) % 1 != 0:
         thread_detection = False  # Intel CPU detected
-        print("New Intel CPU architecture with performance and efficiency cores detected! Not passing thread detection to av1an...")
+        print("New Intel CPU architecture with performance and efficiency cores detected!\nNot passing thread detection to av1an...\n")
     
 if thread_detection: # Checking for Hyperthreading or SMT
     import psutil
@@ -74,9 +74,9 @@ if thread_detection: # Setting values
     else:
         cpu_workers = physical_count
         cpu_thread_affinity = 1
-    print(f"THREADING INFORMATION:\n    Hyperthreading / SMT - {hyperthreading}\n    Workers - {cpu_workers}\n    Thread Affinity - {cpu_thread_affinity}")
+    print(f"THREADING INFORMATION:\n  Hyperthreading / SMT - {hyperthreading}\n  Workers - {cpu_workers}\n  Thread Affinity - {cpu_thread_affinity}")
 else:
-    print("THREADING INFORMATION:\n    Automatic Thread Detection - DISABLED")
+    print("THREADING INFORMATION:\n  Automatic Thread Detection - DISABLED")
 
 # Assuming av1an is stored in PATH
 av1an_exec = "av1an.exe"
