@@ -74,7 +74,7 @@ if thread_detection: # Setting values
     else:
         cpu_workers = physical_count
         cpu_thread_affinity = 1
-    print(f"THREADING INFORMATION:\n  Hyperthreading / SMT: {hyperthreading}\n  Workers: {cpu_workers}\n  Thread Affinity: {cpu_thread_affinity}")
+    print(f"THREADING INFORMATION:\n  Hyperthreading / SMT: {hyperthreading}\n  Workers: {cpu_workers}\n  Thread Affinity: {cpu_thread_affinity}\n")
 else:
     print("THREADING INFORMATION:\n  Automatic Thread Detection: DISABLED")
 
