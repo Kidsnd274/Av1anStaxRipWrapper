@@ -74,9 +74,9 @@ if thread_detection: # Setting values
     else:
         cpu_workers = physical_count
         cpu_thread_affinity = 1
-    print(f"THREADING INFORMATION:\n  Hyperthreading / SMT - {hyperthreading}\n  Workers - {cpu_workers}\n  Thread Affinity - {cpu_thread_affinity}")
+    print(f"THREADING INFORMATION:\n  Hyperthreading / SMT: {hyperthreading}\n  Workers: {cpu_workers}\n  Thread Affinity: {cpu_thread_affinity}")
 else:
-    print("THREADING INFORMATION:\n  Automatic Thread Detection - DISABLED")
+    print("THREADING INFORMATION:\n  Automatic Thread Detection: DISABLED")
 
 # Assuming av1an is stored in PATH
 av1an_exec = "av1an.exe"
@@ -84,13 +84,6 @@ av1an_exec = "av1an.exe"
 command = av1an_exec
 command = add_argument(command, "--verbose -y --resume -a=\"-an\" -e rav1e --pix-format yuv420p10le")
 
-if parser_args.photon_noise is not None:
-    command = add_argument(command, f"--photon-noise {parser_args.photon_noise}")
-if parser_args.chroma_noise:
-    command = add_argument(command, f"--chroma-noise")
-if parser_args.sc_downscale_height is not None:
-    command = add_argument(command, f"--sc-downscale-height {parser_args.sc_downscale_height}")
-    
 # Thread arguments
 if thread_detection:
     command = add_argument(command, f"--workers {cpu_workers} --set-thread_affinity {cpu_thread_affinity}")
@@ -100,6 +93,13 @@ else:
     if parser_args.set_thread_affinity is not None:
         command = add_argument(command, f"--set-thread-affinity {parser_args.set_thread_affinity}")
 
+if parser_args.photon_noise is not None:
+    command = add_argument(command, f"--photon-noise {parser_args.photon_noise}")
+if parser_args.chroma_noise:
+    command = add_argument(command, f"--chroma-noise")
+if parser_args.sc_downscale_height is not None:
+    command = add_argument(command, f"--sc-downscale-height {parser_args.sc_downscale_height}")
+
 if rav1e_argument_string != "":
     command = add_argument(command, f"-v=\"{rav1e_argument_string} --no-scene-detection\"")
 
@@ -107,7 +107,7 @@ command = add_argument(command, f"-i \"{input_file}\" -o \"{output_file}\" --tem
        
 
 sys.stdout.write("Starting av1an... Check new console window for progress\n")
-sys.stdout.write("Arguments: " + str(command) + "\n")
+sys.stdout.write("Command: " + str(command) + "\n")
 sys.stdout.flush()
 
 process = subprocess.run(command, shell=False, creationflags=subprocess.CREATE_NEW_CONSOLE)
