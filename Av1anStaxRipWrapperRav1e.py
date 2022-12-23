@@ -77,7 +77,7 @@ if thread_detection: # Setting values
     print(f"THREADING INFORMATION:\n  Hyperthreading / SMT: {hyperthreading}\n  Workers: {cpu_workers}\n  Thread Affinity: {cpu_thread_affinity}\n")
 else:
     print("THREADING INFORMATION:\n  Automatic Thread Detection: DISABLED")
-
+print("")
 # Assuming av1an is stored in PATH
 av1an_exec = "av1an.exe"
 
