@@ -86,7 +86,7 @@ command = add_argument(command, "--verbose -y --resume -a=\"-an\" -e rav1e --pix
 
 # Thread arguments
 if thread_detection:
-    command = add_argument(command, f"--workers {cpu_workers} --set-thread_affinity {cpu_thread_affinity}")
+    command = add_argument(command, f"--workers {cpu_workers} --set-thread-affinity {cpu_thread_affinity}")
 else:
     if parser_args.workers is not None:
         command = add_argument(command, f"--workers {parser_args.workers}")
