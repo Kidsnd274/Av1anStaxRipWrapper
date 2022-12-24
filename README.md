@@ -2,6 +2,8 @@
 Python wrapper script to use Av1an with StaxRip
  - Currently only the rav1e script is working
 
+INSTALL AND USAGE GUIDE (YouTube) (not done yet)
+
 ## Contents
 - [Usage](#usage)
 - [Requirements](#requirements)
@@ -23,9 +25,9 @@ Everything after the `-t` parameter will affect the encoding parameters (either 
 ## Requirements
 - ffmpeg (with shared libraries) (Av1an requirement)
 - [rav1e](https://github.com/xiph/rav1e/releases)
-- StaxRip
+- [StaxRip](https://github.com/staxrip/staxrip/releases)
 
-Since Av1an requires `ffmpeg`, `rav1e` to be in PATH, this script can automatically help you add important folders to PATH when it's being run (for a more portable installation).
+Since Av1an requires `ffmpeg`, `rav1e` to be in PATH, this script can automatically help you add important folders to PATH when it's being run (for a more portable installation). Either follow the instructions in [Setup](#setup) or install the requirements yourself and add them to system PATH.
 
 This script also requires the `psutil` module in Python to automatically detect CPU core counts to pass into av1an.
  - You can run with the `--disable-automatic-thread-detection` flag to disable this
