@@ -1,3 +1,4 @@
+cd ..\..\FrameServer\VapourSynth
 curl --output get-pip.py https://bootstrap.pypa.io/get-pip.py
 .\python.exe get-pip.py
 .\Scripts\pip.exe install psutil
