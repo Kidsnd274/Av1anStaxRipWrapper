@@ -23,7 +23,7 @@ A good starting command would be:
 Everything after the `-t` parameter will affect the encoding parameters (either Av1an or rav1e). Refer to [Command Line Options](#command-line-options) section for more information.
 
 ## Requirements
-- ffmpeg (with shared libraries) (Av1an requirement)
+- [ffmpeg](https://ffmpeg.org/download.html) (with shared libraries) (Av1an requirement)
 - [rav1e](https://github.com/xiph/rav1e/releases)
 - [StaxRip](https://github.com/staxrip/staxrip/releases)
 
