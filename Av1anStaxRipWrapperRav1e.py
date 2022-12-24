@@ -26,6 +26,13 @@ input_file = parser_args.input
 output_file = parser_args.output
 tempdir = parser_args.tempdir
 
+def import_or_install(package):
+    try:
+        __import__(package)
+    except ImportError:
+        import pip
+        pip.main(['install', package])     
+
 # # Parsing rav1e arguments
 rav1e_argument_string = ""
 
@@ -60,7 +67,7 @@ if thread_detection: # Checking for new Intel architecture
         print("New Intel CPU architecture with performance and efficiency cores detected!\nNot passing thread detection to av1an...\n")
     
 if thread_detection: # Checking for Hyperthreading or SMT
-    import psutil
+    import_or_install(psutil)
     logical_count = psutil.cpu_count(logical = True)
     physical_count = psutil.cpu_count(logical = False)
     if (logical_count / physical_count) == 2:
