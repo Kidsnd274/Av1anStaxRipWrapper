@@ -68,6 +68,7 @@ if thread_detection: # Checking for new Intel architecture
         print("New Intel CPU architecture with performance and efficiency cores detected!\nNot passing thread detection to av1an...\n")
     
 if thread_detection: # Checking for Hyperthreading or SMT
+    import_or_install("psutil")
     logical_count = psutil.cpu_count(logical = True)
     physical_count = psutil.cpu_count(logical = False)
     if (logical_count / physical_count) == 2:
