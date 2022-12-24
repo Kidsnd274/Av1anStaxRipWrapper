@@ -72,3 +72,6 @@ options:
                         many threads. Additional tiles may be needed to increase thread utilization
                         [default: 0] (rav1e parameter)
 ```
+
+## Automatic Thread Detection
+In my testing, I found that I get the best utilization and encoding speeds when creating the same number of workers as 
