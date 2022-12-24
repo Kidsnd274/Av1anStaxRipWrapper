@@ -31,7 +31,8 @@ def import_or_install(package):
         __import__(package)
     except ImportError:
         import pip
-        pip.main(['install', package])     
+        pip.main(['install', package])
+       __import__(package)
 
 # # Parsing rav1e arguments
 rav1e_argument_string = ""
