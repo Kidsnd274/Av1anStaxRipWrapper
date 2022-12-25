@@ -9,6 +9,7 @@ INSTALL AND USAGE GUIDE (YouTube) (not done yet)
 - [Requirements](#requirements)
 - [Setup](#setup)
 - [Command Line Options](#command-line-options)
+- [Automatic Thread Detection](#automatic-thread-detection)
 
 ## Usage
 This script makes use of the Command Line option in StaxRip. There are some required arguments needed in the command that allows Av1an to work with StaxRip. Namely `-i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp"`. `-s "%startup_dir%"` is needed if you want a portable installation. Portable installation is described in more detail at the [Setup](#setup) section.
@@ -23,16 +24,21 @@ A good starting command would be:
 Everything after the `-t` parameter will affect the encoding parameters (either Av1an or rav1e). Refer to [Command Line Options](#command-line-options) section for more information.
 
 ## Requirements
-- ffmpeg (with shared libraries) (Av1an requirement)
+- [ffmpeg](https://ffmpeg.org/download.html) (with shared libraries) (Av1an requirement)
 - [rav1e](https://github.com/xiph/rav1e/releases)
 - [StaxRip](https://github.com/staxrip/staxrip/releases)
 
-Since Av1an requires `ffmpeg`, `rav1e` to be in PATH, this script can automatically help you add important folders to PATH when it's being run (for a more portable installation). Either follow the instructions in [Setup](#setup) or install the requirements yourself and add them to system PATH.
-
 This script also requires the `psutil` module in Python to automatically detect CPU core counts to pass into av1an.
- - You can run with the `--disable-automatic-thread-detection` flag to disable this
+ - You can run with the `--disable-automatic-thread-detection` flag to disable this feature and requirement
 
 ## Setup
+### Portable Installation
+Since Av1an requires `ffmpeg`, `rav1e` to be in PATH, this script can automatically help you add important folders temporarily to PATH when it's being run (for a more portable installation). In this way, your actual system PATH is not affected when running Av1an. However, this means that you need to install the tools in specific folders in StaxRip as the wrapper script looks for them there.
+
+Portable mode is enabled when the `-s` flag is specified and the StaxRip startup directory is provided.
+
+### Alternative Installation (install tools to system PATH)
+Basically, just make sure `Av1an`, `ffmpeg`, `rav1e` are all accessible from PATH.
 
 ## Command Line Options
 ```
@@ -54,7 +60,7 @@ options:
   --sc-downscale-height SC_DOWNSCALE_HEIGHT
                         Optional downscaling for scene detection. By default, no downscaling is performed. (Av1an parameter)
 
-# Thread Management parameters (Using any of these would disable the wrapper's Automatic Thread Detection feature)
+# Threading parameters (Using any of these would disable the wrapper's Automatic Thread Detection feature)
   --workers WORKERS     Number of workers to spawn [0 = automatic] (Av1an Paramter)
   --set-thread-affinity SET_THREAD_AFFINITY
                         Pin each worker to a specific set of threads of this size (disabled by default) (Av1an parameter)
@@ -72,3 +78,26 @@ options:
                         many threads. Additional tiles may be needed to increase thread utilization
                         [default: 0] (rav1e parameter)
 ```
+
+## Automatic Thread Detection
+In my testing, I found that I get the best utilization and encoding speeds when creating the same number of workers as the number of physical cores available in your system. Along with having the number of threads per worker be 2 if your system supports hyperthreading/SMT and 1 if your system does not.
+
+With automatic thread detection, the wrapper script will automatically detect and pass in the relevant parameters to Av1an. For example,
+
+```
+Ryzen 7 5800X
+  Physical Cores: 8 cores
+  Logical Cores: 16 cores
+  Hyperthreading/SMT: Enabled
+  Threading Parameters: --workers 8 --set-thread--affinity 2
+  
+Intel i5 i5-6600K
+  Physical Cores: 4 cores
+  Logical Cores: 4 cores
+  Hyperthreading/SMT: Disabled
+  Threading Parameters: --workers 4 --set-thread-affinity 1
+```
+
+If your system uses an Intel 12th Gen chip and above (with the new hybrid architecture with P-cores and E-cores), this feature is disabled.
+
+If you do not want to use this feature, you can use the `--disable-automatic-thread-detection` flag or any of the Threading parameters under [Command Line Options](#command-line-options). Using any the Threading parameters would disable this feature.
