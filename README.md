@@ -40,7 +40,7 @@ Portable mode is enabled when the `-s` flag is used with the StaxRip startup dir
 1. Ensure encoders, Av1an and the wrapper script are extracted in the right directories
  - Av1an: `StaxRip\Apps\Encoders\Av1an`
  - rav1e: `StaxRip\Apps\Encoders\rav1e`
- - FFMPEG: `StaxRip\Apps\Encoders\ffmpeg`
+ - FFMPEG: `StaxRip\Apps\Encoders\Av1an` (moving it to an `ffmpeg` folder would interfere with StaxRip's own ffmpeg)
  - Wrapper Script: `StaxRip\Apps\Encoders\Av1anStaxRipWrapper`
 2. Use the **Command Line** encoder profile to create an Av1an Encoder Profile
 <img src="https://user-images.githubusercontent.com/1343896/209458682-9e42b62f-22d2-4efb-a84d-47da50c1921f.png" alt="staxrip_image" width="200"/>
