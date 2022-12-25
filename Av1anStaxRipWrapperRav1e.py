@@ -17,7 +17,7 @@ def set_path(path):
     staxrip_path = pathlib.Path(path)
     av1an_path = staxrip_path / "Apps" / "Encoders" / "Av1an"
     rav1e_path = staxrip_path / "Apps" / "Encoders" / "rav1e"
-    vp_path = staxrip_path / "Apps" / "FrameServer" / "VapourSynth"
+    vp_path = staxrip_path / "Apps" / "Encoders" / "Av1anStaxRipWrapper" / "VapourSynth"
     environ = os.environ
     environ["PATH"] = f"{str(av1an_path)};{str(rav1e_path)};{str(vp_path)};{environ['PATH']}"
     return environ
