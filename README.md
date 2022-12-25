@@ -14,7 +14,7 @@ INSTALL AND USAGE GUIDE (YouTube) (not done yet)
 ## Usage
 This script makes use of the Command Line option in StaxRip. There are some required arguments needed in the command that allows Av1an to work with StaxRip. Namely `-i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp"`. `-s "%startup_dir%"` is needed if you want a portable installation. Portable installation is described in more detail at the [Setup](#setup) section.
 
-<img src="https://user-images.githubusercontent.com/1343896/209447195-c6ffb08c-bb6c-4792-a1cd-a09422c01156.png" alt="staxrip_image" width="500"/>
+<img src="https://user-images.githubusercontent.com/1343896/209460663-fa6ac57b-ec77-48d7-b993-ba67bf0d56a1.png" alt="staxrip_image" width="500"/>
 
 A good starting command would be:
 
@@ -42,16 +42,17 @@ Portable mode is enabled when the `-s` flag is used with the StaxRip startup dir
  - rav1e: `StaxRip\Apps\Encoders\rav1e`
  - FFMPEG: `StaxRip\Apps\Encoders\Av1an` (moving it to an `ffmpeg` folder would interfere with StaxRip's own ffmpeg)
  - Wrapper Script: `StaxRip\Apps\Encoders\Av1anStaxRipWrapper`
-2. Use the **Command Line** encoder profile to create an Av1an Encoder Profile
+2. Run the `setup_py_vp_environment.bat` script from the Av1anStaxRipWrapper folder to install required Python modules and VapourSynth plugins
+3. Use the **Command Line** encoder profile to create an Av1an Encoder Profile
 <img src="https://user-images.githubusercontent.com/1343896/209458682-9e42b62f-22d2-4efb-a84d-47da50c1921f.png" alt="staxrip_image" width="200"/>
-<img src="https://user-images.githubusercontent.com/1343896/209447195-c6ffb08c-bb6c-4792-a1cd-a09422c01156.png" alt="staxrip_image" width="500"/>
+<img src="https://user-images.githubusercontent.com/1343896/209460663-fa6ac57b-ec77-48d7-b993-ba67bf0d56a1.png" alt="staxrip_image" width="500"/>
 
 Good starting command:
 ```
 "%app_path:python%" "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapperRav1e.py" -s "%startup_dir%" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --quantizer 60 --speed 6 --tiles 2 --threads 2 --photon-noise 2 --chroma-noise --sc-downscale-height 540
 ```
 
-3. Save this Encoder Profile with the name `AV1 | av1an rav1e`, and it will appear in the AV1 drop-down menu.
+4. Save this Encoder Profile with the name `AV1 | av1an rav1e`, and it will appear in the AV1 drop-down menu.
 ![image](https://user-images.githubusercontent.com/1343896/209458707-bca3edda-36af-4d3d-b4a5-899160a5e8d9.png)
 
 
