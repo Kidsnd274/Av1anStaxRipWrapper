@@ -25,13 +25,13 @@ def set_path(path):
 def print_version(parser_args):
     if parser_args.staxrip_startup_dir is not None:
         my_env = set_path(parser_args.staxrip_startup_dir)
-        subprocess.run("ffmpeg --version", shell=False, env=my_env)
+        subprocess.run("ffmpeg -version", shell=False, env=my_env)
         print("")
         subprocess.run("av1an --version", shell=False, env=my_env)
         print("")
         subprocess.run("rav1e --version", shell=False, env=my_env)
     else:
-        subprocess.run("ffmpeg --version", shell=False) # Assume everything is in PATH
+        subprocess.run("ffmpeg -version", shell=False) # Assume everything is in PATH
         print("")
         subprocess.run("av1an --version", shell=False)
         print("")
