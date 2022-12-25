@@ -18,8 +18,9 @@ def set_path(path):
     av1an_path = staxrip_path / "Apps" / "Encoders" / "av1an"
     ffmpeg_path = staxrip_path / "Apps" / "Encoders" / "ffmpeg"
     rav1e_path = staxrip_path / "Apps" / "Encoders" / "rav1e"
+    vp_path = staxrip_path / "Apps" / "FrameServer" / "VapourSynth"
     environ = os.environ
-    environ["PATH"] = f"{str(av1an_path)};{str(ffmpeg_path)};{str(rav1e_path)};{environ['PATH']}"
+    environ["PATH"] = f"{str(av1an_path)};{str(ffmpeg_path)};{str(rav1e_path)};{str(vp_path)};{environ['PATH']}"
     return environ
 
 def print_version(parser_args):
