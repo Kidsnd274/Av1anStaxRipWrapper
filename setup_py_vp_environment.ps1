@@ -15,7 +15,7 @@ Invoke-WebRequest -Uri "https://bootstrap.pypa.io/get-pip.py" -OutFile "get-pip.
 .\python.exe get-pip.py
 (Get-Content python310._pth) -replace '#import site', 'import site' | Out-File -encoding ASCII python310._pth
 .\Scripts\pip.exe install psutil
-echo "Copying lsmas ffms2 to VapourSynth plugin directory - Make sure to disable loading VP plugins!"
+echo "Copying lsmas ffms2 to VapourSynth plugin directory"
 copy ..\..\..\Plugins\Dual\FFMS2\ffms2.dll .\vapoursynth64\plugins
 copy ..\..\..\Plugins\Dual\L-Smash-Works\LSMASHSource.dll .\vapoursynth64\plugins
 pause
