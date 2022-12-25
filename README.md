@@ -19,7 +19,7 @@ This script makes use of the Command Line option in StaxRip. There are some requ
 A good starting command would be:
 
 ```
-"%app_path:python%" "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapperRav1e.py" -s "%startup_dir%" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --quantizer 60 --speed 6 --tiles 2 --threads 2 --photon-noise 2 --chroma-noise --sc-downscale-height 540
+"%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\VapourSynth\python.exe" "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapperRav1e.py" -s "%startup_dir%" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --quantizer 60 --speed 6 --tiles 2 --threads 2 --photon-noise 2 --chroma-noise --sc-downscale-height 540
 ```
 Everything after the `-t` parameter will affect the encoding parameters (either Av1an or rav1e). Refer to [Command Line Options](#command-line-options) section for more information.
 
@@ -50,7 +50,7 @@ Portable mode is enabled when the `-s` flag is used with the StaxRip startup dir
 
 Good starting command:
 ```
-"%app_path:python%" "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapperRav1e.py" -s "%startup_dir%" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --quantizer 60 --speed 6 --tiles 2 --threads 2 --photon-noise 2 --chroma-noise --sc-downscale-height 540
+"%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\VapourSynth\python.exe" "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapperRav1e.py" -s "%startup_dir%" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --quantizer 60 --speed 6 --tiles 2 --threads 2 --photon-noise 2 --chroma-noise --sc-downscale-height 540
 ```
 
 5. Save this Encoder Profile with the name `AV1 | av1an rav1e`, and it will appear in the AV1 drop-down menu.
