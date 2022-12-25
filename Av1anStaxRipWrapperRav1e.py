@@ -15,7 +15,7 @@ def set_path(path):
     import os
     import pathlib
     staxrip_path = pathlib.Path(path)
-    av1an_path = staxrip_path / "Apps" / "Encoders" / "av1an"
+    av1an_path = staxrip_path / "Apps" / "Encoders" / "Av1an"
     ffmpeg_path = staxrip_path / "Apps" / "Encoders" / "ffmpeg"
     rav1e_path = staxrip_path / "Apps" / "Encoders" / "rav1e"
     vp_path = staxrip_path / "Apps" / "FrameServer" / "VapourSynth"
