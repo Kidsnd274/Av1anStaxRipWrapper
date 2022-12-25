@@ -33,15 +33,37 @@ This script also requires the `psutil` module in Python to automatically detect 
 
 ## Setup
 ### Portable Installation
-Since Av1an requires `ffmpeg`, `rav1e` to be in PATH, this script can automatically help you add important folders temporarily to PATH when it's being run (for a more portable installation). In this way, your actual system PATH is not affected when running Av1an. However, this means that you need to install the tools in specific folders in StaxRip as the wrapper script looks for them there.
+Since Av1an requires `ffmpeg`, `rav1e`, `VapourSynth` to be in PATH, this script can automatically help you add important folders (from StaxRip) temporarily to PATH when it's being run (for portable installation). In this way, your actual system PATH is not affected when running Av1an. However, this means that you need to install the tools in specific folders in StaxRip as the wrapper script looks for them there.
 
-Portable mode is enabled when the `-s` flag is specified and the StaxRip startup directory is provided.
+Portable mode is enabled when the `-s` flag is used with the StaxRip startup directory.
+
+1. Ensure encoders, Av1an and the wrapper script are extracted in the right directories
+ - Av1an: `StaxRip\Apps\Encoders\Av1an`
+ - rav1e: `StaxRip\Apps\Encoders\rav1e`
+ - FFMPEG: `StaxRip\Apps\Encoders\ffmpeg`
+ - Wrapper Script: `StaxRip\Apps\Encoders\Av1anStaxRipWrapper`
+2. Use the **Command Line** encoder profile to create an Av1an Encoder Profile
+<img src="https://user-images.githubusercontent.com/1343896/209458682-9e42b62f-22d2-4efb-a84d-47da50c1921f.png" alt="staxrip_image" width="200"/>
+<img src="https://user-images.githubusercontent.com/1343896/209447195-c6ffb08c-bb6c-4792-a1cd-a09422c01156.png" alt="staxrip_image" width="500"/>
+
+Good starting command:
+```
+"%app_path:python%" "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapperRav1e.py" -s "%startup_dir%" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --quantizer 60 --speed 6 --tiles 2 --threads 2 --photon-noise 2 --chroma-noise --sc-downscale-height 540
+```
+
+3. Save this Encoder Profile with the name `AV1 | av1an rav1e`, and it will appear in the AV1 drop-down menu.
+![image](https://user-images.githubusercontent.com/1343896/209458707-bca3edda-36af-4d3d-b4a5-899160a5e8d9.png)
+
 
 ### Alternative Installation (install tools to system PATH)
-Basically, just make sure `Av1an`, `ffmpeg`, `rav1e` are all accessible from PATH.
+Basically, just make sure `Av1an`, `ffmpeg`, `rav1e`, `Python`, `VapourSynth` are all accessible from PATH and follow the steps above from Step 2.
+
+The command in StaxRip used is\
+`python "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapperRav1e.py" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --workers 6 --quantizer 80 --speed 6 --tiles 2 --threads 2`
 
 ## Command Line Options
 ```
+
 options:
   -h, --help            show this help message and exit
   -i INPUT              Input File (for StaxRip)
@@ -91,7 +113,7 @@ Ryzen 7 5800X
   Hyperthreading/SMT: Enabled
   Threading Parameters: --workers 8 --set-thread--affinity 2
   
-Intel i5 i5-6600K
+Intel i5-6600K
   Physical Cores: 4 cores
   Logical Cores: 4 cores
   Hyperthreading/SMT: Disabled
