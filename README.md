@@ -2,7 +2,7 @@
 Python wrapper script to use Av1an with StaxRip
  - Currently only the rav1e script is working
 
-INSTALL AND USAGE GUIDE (YouTube) (not done yet)
+[INSTALL AND USAGE GUIDE (YouTube)](https://www.youtube.com/watch?v=lMfTwd0qDC8)
 
 ## Contents
 - [Usage](#usage)
