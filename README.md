@@ -47,7 +47,7 @@ Portable mode is enabled when the `-s` flag is used with the StaxRip startup dir
 <img src="https://user-images.githubusercontent.com/1343896/209458682-9e42b62f-22d2-4efb-a84d-47da50c1921f.png" alt="staxrip_image" width="200"/>
 <img src="https://user-images.githubusercontent.com/1343896/209460663-fa6ac57b-ec77-48d7-b993-ba67bf0d56a1.png" alt="staxrip_image" width="500"/>
 
-Good starting command:
+Good starting command: (make sure to change **Output File Type** to `mkv`)
 ```
 "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\VapourSynth\python.exe" "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapperRav1e.py" -s "%startup_dir%" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --quantizer 60 --speed 6 --tiles 2 --threads 2 --photon-noise 2 --chroma-noise --sc-downscale-height 540
 ```
