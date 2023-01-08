@@ -124,7 +124,7 @@ if parser_args.staxrip_startup_dir is not None:
 av1an_exec = "av1an.exe"
 
 command = av1an_exec
-command = add_argument(command, "--verbose -y --resume -a=\"-an\" -e rav1e --pix-format yuv420p10le")
+command = add_argument(command, "--verbose -y --resume -a=\"-an\" -e rav1e")
 
 # Thread arguments
 if thread_detection:
