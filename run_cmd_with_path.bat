@@ -5,4 +5,4 @@ echo.
 SET PATH=..\Av1an;..\rav1e;.\VapourSynth;%PATH%
 echo Path set, you can now access encoder tools
 echo.
-cmd
+cmd /K
