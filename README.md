@@ -67,7 +67,7 @@ Good starting command: (make sure to change **Output File Type** to `mkv`)
 
 
 ### Alternative Installation (install tools to system PATH)
-Basically, just make sure `Av1an`, `ffmpeg`, `rav1e`, `Python`, `VapourSynth` are all accessible from PATH and follow the steps above from Step 2.
+Basically, just make sure `Av1an`, `ffmpeg`, `aomenc`, `rav1e`, `SVT-AV1`, `Python`, `VapourSynth` are all accessible from PATH and follow the steps above from Step 2.
 
 The command in StaxRip used is\
 `python "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapperRav1e.py" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --pix-format yuv420p10le -e rav1e --photon-noise 2 --chroma-noise --sc-downscale-height 540 -v "--quantizer 60 --speed 6 --tiles 2 --threads 2"`
