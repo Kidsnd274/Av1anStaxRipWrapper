@@ -3,6 +3,12 @@ REM This batch script needs to be run in StaxRip\Apps\Encoders\Av1anStaxRipWrapp
 echo This batch script needs to be run in StaxRip\Apps\Encoders\Av1anStaxRipWrapper!
 echo.
 SET PATH=..\Av1an;..\aomenc;..\rav1e;.\VapourSynth;%PATH%
-echo Path set, you can now access encoder tools
+echo =================================================
+echo Av1anStaxRipWrapper
+echo https://github.com/Kidsnd274/Av1anStaxRipWrapper
 echo.
-cmd
+echo Path set, you can now access encoder tools
+echo No need to use -s flag for scripts
+echo =================================================
+echo.
+cmd /K

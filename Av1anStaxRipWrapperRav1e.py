@@ -32,13 +32,11 @@ def print_version(parser_args):
         print("")
         subprocess.run("av1an --version", shell=False, env=my_env)
         print("")
-        subprocess.run("rav1e --version", shell=False, env=my_env)
     else:
         subprocess.run("ffmpeg -version", shell=False) # Assume everything is in PATH
         print("")
         subprocess.run("av1an --version", shell=False)
         print("")
-        subprocess.run("rav1e --version", shell=False)
     exit(0)
 
 # Command Line Arguments

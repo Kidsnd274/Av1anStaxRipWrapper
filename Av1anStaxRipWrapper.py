@@ -5,6 +5,12 @@ import sys
 # This script allows the usage of any encoders supported by Av1an.
 # Use the -e flag to specify the encoder and make sure .exe is in the specific folders. https://github.com/Kidsnd274/Av1anStaxRipWrapper
 
+
+# Add a check to see what encoders are available. Make a nice opening message saying
+# Av1anStaxRip, Supported Encoders....
+# FileNotFoundError is the error when using subprocess.run
+
+
 # Functions
 def add_argument(curr, new):
     return_string = curr
@@ -30,15 +36,34 @@ def set_path(path):
 def print_version(parser_args):
     if parser_args.staxrip_startup_dir is not None:
         my_env = set_path(parser_args.staxrip_startup_dir)
-        subprocess.run("ffmpeg -version", shell=False, env=my_env)
-        print("")
-        subprocess.run("av1an --version", shell=False, env=my_env)
-        print("")
     else:
-        subprocess.run("ffmpeg -version", shell=False) # Assume everything is in PATH
-        print("")
-        subprocess.run("av1an --version", shell=False)
-        print("")
+        import os
+        environ = os.environ
+        my_env = environ["PATH"] # Assume everything is in PATH
+    try:
+        subprocess.run("ffmpeg -version", shell=False, env=my_env)
+    except FileNotFoundError:
+        print("ffmpeg not found!")
+    print("")
+    try:
+        subprocess.run("av1an --version", shell=False, env=my_env)
+    except FileNotFoundError:
+        print("Av1an not found!")
+    print("")
+    try:
+        subprocess.run("aomenc --version", shell=False, env=my_env)
+    except FileNotFoundError:
+        print("aomenc not found!")
+    print("")
+    try:
+        subprocess.run("rav1e --version", shell=False, env=my_env)
+    except FileNotFoundError:
+        print("rav1e not found!")
+    print("")
+    try:
+        subprocess.run("SvtAv1EncApp", shell=False, env=my_env)
+    except FileNotFoundError:
+        print("SvtAv1EncApp not found!")
     exit(0)
 
 # Command Line Arguments
