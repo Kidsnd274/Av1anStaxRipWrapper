@@ -2,6 +2,9 @@ import argparse
 import subprocess
 import sys
 
+# This script allows the usage of any encoders supported by Av1an.
+# Use the -e flag to specify the encoder and make sure .exe is in the specific folders. https://github.com/Kidsnd274/Av1anStaxRipWrapper
+
 # Functions
 def add_argument(curr, new):
     return_string = curr
@@ -18,6 +21,7 @@ def set_path(path):
     av1an_path = staxrip_path / "Apps" / "Encoders" / "Av1an"
     aomenc_path = staxrip_path / "Apps" / "Encoders" / "aomenc"
     rav1e_path = staxrip_path / "Apps" / "Encoders" / "rav1e"
+    svtav1_path = staxrip_path / "Apps" / "Encoders" / "SVT-AV1"
     vp_path = staxrip_path / "Apps" / "Encoders" / "Av1anStaxRipWrapper" / "VapourSynth"
     environ = os.environ
     environ["PATH"] = f"{str(av1an_path)};{str(aomenc_path)};{str(rav1e_path)};{str(vp_path)};{environ['PATH']}"
