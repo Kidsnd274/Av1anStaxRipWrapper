@@ -1,11 +1,15 @@
-# Av1anStaxRipWrapper
-Python wrapper script to use Av1an with StaxRip
+# Av1anStaxRipWrapperRav1e
+Python wrapper script to use Av1an and rav1e with StaxRip
 
-[Av1anStaxRipWrapperRav1e](README_RAV1E.md) (rav1e specialized script README)\
-[INSTALL AND USAGE GUIDE (YouTube)](https://www.youtube.com/watch?v=lMfTwd0qDC8) for the rav1e script
+**This script is more specialized for rav1e
+Use the [generic script](README.md) for other encoders**
+The generic script is capable to using rav1e as well and has the capability to use any arguments that the selected encoder and Av1an allows.
+This script is less flexible but the command line arguments are neater as it is more focused on rav1e.
+
+[INSTALL AND USAGE GUIDE (YouTube)](https://www.youtube.com/watch?v=lMfTwd0qDC8) for rav1e Script
 
 ## Contents
-- [Av1anStaxRipWrapper](#av1anstaxripwrapper)
+- [Av1anStaxRipWrapperRav1e](#av1anstaxripwrapper)
   - [Contents](#contents)
   - [Usage](#usage)
   - [Requirements](#requirements)
@@ -23,17 +27,13 @@ This script makes use of the Command Line option in StaxRip. There are some requ
 A good starting command would be:
 
 ```
-"%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\VapourSynth\python.exe" "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapper.py" -s "%startup_dir%" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --pix-format yuv420p10le -e rav1e --photon-noise 2 --chroma-noise --sc-downscale-height 540 -v "--quantizer 60 --speed 6 --tiles 2 --threads 2"
+"%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\VapourSynth\python.exe" "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapperRav1e.py" -s "%startup_dir%" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --pix-format yuv420p10le --quantizer 60 --speed 6 --tiles 2 --threads 2 --photon-noise 2 --chroma-noise --sc-downscale-height 540
 ```
-Everything after the `-t` parameter will affect the encoding parameters (either Av1an or the selected encoder). Refer to [Command Line Options](#command-line-options) section for more information.
-
-This starting command uses the rav1e encoder and uses the encoding parameters passed in by the argument `-v`.
+Everything after the `-t` parameter will affect the encoding parameters (either Av1an or rav1e). Refer to [Command Line Options](#command-line-options) section for more information.
 
 ## Requirements
 - [ffmpeg](https://ffmpeg.org/download.html) (with shared libraries) (Av1an requirement)
-- [aomenc](https://aomedia.googlesource.com/aom/) or
-- [rav1e](https://github.com/xiph/rav1e/releases) or
-- [SVT-AV1](https://gitlab.com/AOMediaCodec/SVT-AV1)
+- [rav1e](https://github.com/xiph/rav1e/releases)
 - [StaxRip](https://github.com/staxrip/staxrip/releases)
 
 This script also requires the `psutil` module in Python to automatically detect CPU core counts to pass into av1an.
@@ -41,15 +41,13 @@ This script also requires the `psutil` module in Python to automatically detect 
 
 ## Setup
 ### Portable Installation
-Since Av1an requires `ffmpeg`, `aomenc` or `rav1e` or `SVT-AV1`, `VapourSynth` to be in PATH, this script can automatically help you add important folders (from StaxRip) temporarily to PATH when it's being run (for portable installation). In this way, your actual system PATH is not affected when running Av1an. However, this means that you need to install the tools in specific folders in StaxRip as the wrapper script looks for them there.
+Since Av1an requires `ffmpeg`, `rav1e`, `VapourSynth` to be in PATH, this script can automatically help you add important folders (from StaxRip) temporarily to PATH when it's being run (for portable installation). In this way, your actual system PATH is not affected when running Av1an. However, this means that you need to install the tools in specific folders in StaxRip as the wrapper script looks for them there.
 
 Portable mode is enabled when the `-s` flag is used with the StaxRip startup directory.
 
 1. Ensure encoders, Av1an and the wrapper script are extracted in the right directories
  - Av1an: `StaxRip\Apps\Encoders\Av1an`
- - aomenc: `StaxRip\Apps\Encoders\aomenc`
  - rav1e: `StaxRip\Apps\Encoders\rav1e`
- - SVT-AV1: `StaxRip\Apps\Encoders\SVT-AV1`
  - FFMPEG: `StaxRip\Apps\Encoders\Av1an` (moving it to an `ffmpeg` folder would interfere with StaxRip's own ffmpeg)
  - Wrapper Script: `StaxRip\Apps\Encoders\Av1anStaxRipWrapper`
 2. Run the `setup_py_vp_environment.bat` script from the Av1anStaxRipWrapper folder to install required Python modules and VapourSynth plugins
@@ -59,10 +57,10 @@ Portable mode is enabled when the `-s` flag is used with the StaxRip startup dir
 
 Good starting command: (make sure to change **Output File Type** to `mkv`)
 ```
-"%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\VapourSynth\python.exe" "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapper.py" -s "%startup_dir%" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --pix-format yuv420p10le -e rav1e --photon-noise 2 --chroma-noise --sc-downscale-height 540 -v "--quantizer 60 --speed 6 --tiles 2 --threads 2"
+"%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\VapourSynth\python.exe" "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapperRav1e.py" -s "%startup_dir%" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --pix-format yuv420p10le --quantizer 60 --speed 6 --tiles 2 --threads 2 --photon-noise 2 --chroma-noise --sc-downscale-height 540
 ```
 
-1. Save this Encoder Profile with the name `AV1 | av1an`, and it will appear in the AV1 drop-down menu.
+4. Save this Encoder Profile with the name `AV1 | av1an rav1e`, and it will appear in the AV1 drop-down menu.
 ![image](https://user-images.githubusercontent.com/1343896/209458707-bca3edda-36af-4d3d-b4a5-899160a5e8d9.png)
 
 
@@ -70,16 +68,13 @@ Good starting command: (make sure to change **Output File Type** to `mkv`)
 Basically, just make sure `Av1an`, `ffmpeg`, `rav1e`, `Python`, `VapourSynth` are all accessible from PATH and follow the steps above from Step 2.
 
 The command in StaxRip used is\
-`python "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapperRav1e.py" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --pix-format yuv420p10le -e rav1e --photon-noise 2 --chroma-noise --sc-downscale-height 540 -v "--quantizer 60 --speed 6 --tiles 2 --threads 2"`
+`python "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapperRav1e.py" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --pix-format yuv420p10le --quantizer 60 --speed 6 --tiles 2 --threads 2 --photon-noise 2 --chroma-noise --sc-downscale-height 540`
 
 ## Command Line Options
 ```
-options:
-Av1an wrapper for StaxRip
-
 optional arguments:
   -h, --help            show this help message and exit
-  --version             Print Av1an, ffmpeg and the encoders' versions
+  --version             Print Av1an, ffmpeg and rav1e versions
   -i INPUT              Input File (for StaxRip)
   -o OUTPUT             Output File (for StaxRip)
   -t TEMPDIR            Temp Directory (for StaxRip)
@@ -88,14 +83,6 @@ optional arguments:
                         folders to PATH for av1an to detect (only needed for portable installations)
 
 # Av1an parameters
-  -e ENCODER, --encoder ENCODER
-                        Video encoder to use. [default: aom][possible values: aom, rav1e, vpx, svt-av1, x264, x265]
-  -v ENCODER_ARGS, --video-params ENCODER_ARGS
-                        Arguments passed to video encoder
-  -a OTHER_ARGS, --other-args OTHER_ARGS
-                        Other Av1an arguments
-  -f FFMPEG_OPTIONS, --ffmpeg FFMPEG_OPTIONS
-                        FFmpeg filter options
   --photon-noise PHOTON_NOISE
                         Generates a photon noise table and applies it using grain synthesis [strength: 0-64] (disabled
                         by default) (Av1an parameter)
@@ -114,6 +101,17 @@ optional arguments:
                         parameter)
   --disable-automatic-thread-detection
                         Disable the wrapper's automatic thread detection
+
+# rav1e parameters
+  --quantizer QUANTIZER
+                        Quantizer (0-255), smaller values are higher quality (default: 100) (rav1e parameter)
+  --speed SPEED         Speed level (0 is best quality, 10 is fastest) Speeds 10 and 0 are extremes and are generally
+                        not recommended [default: 6] (rav1e parameter)
+  --tiles TILES         Number of tiles. Tile-cols and tile-rows are overridden so that the video has at least this
+                        many tiles (rav1e parameter)
+  --threads THREADS     Set the threadpool size. If 0, will use the number of logical CPUs. rav1e will use up to this
+                        many threads. Additional tiles may be needed to increase thread utilization [default: 0]
+                        (rav1e parameter)
 ```
 
 ## Automatic Thread Detection
