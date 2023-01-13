@@ -58,7 +58,11 @@ def print_version(parser_args):
         print("Av1an not found!")
     print("\n--------------------------------\n")
     try:
-        subprocess.run("aomenc --version", shell=False, env=my_env)
+        aomenc_process = subprocess.Popen("aomenc --help", shell=False, stdout=subprocess.PIPE)
+        out, err = aomenc_process.communicate()
+        out = out.decode("utf-8")
+        for line in out.splitlines()[-6:-3]:
+            print(line)
     except FileNotFoundError:
         print("aomenc not found!")
     print("\n--------------------------------\n")

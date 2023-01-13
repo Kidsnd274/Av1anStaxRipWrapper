@@ -38,15 +38,25 @@ def print_welcome():
 def print_version(parser_args):
     if parser_args.staxrip_startup_dir is not None:
         my_env = set_path(parser_args.staxrip_startup_dir)
-        subprocess.run("ffmpeg -version", shell=False, env=my_env)
-        print("")
-        subprocess.run("av1an --version", shell=False, env=my_env)
-        print("")
     else:
-        subprocess.run("ffmpeg -version", shell=False) # Assume everything is in PATH
-        print("")
-        subprocess.run("av1an --version", shell=False)
-        print("")
+        import os
+        my_env = os.environ
+        print(my_env["PATH"])
+    try:
+        subprocess.run("ffmpeg -version", shell=False, env=my_env)
+    except FileNotFoundError:
+        print("ffmpeg not found!")
+    print("\n--------------------------------\n")
+    try:
+        subprocess.run("av1an --version", shell=False, env=my_env)
+    except FileNotFoundError:
+        print("Av1an not found!")
+    print("\n--------------------------------\n")
+    try:
+        subprocess.run("rav1e --version", shell=False, env=my_env)
+    except FileNotFoundError:
+        print("rav1e not found!")
+    print("\n--------------------------------\n")
     exit(0)
 
 # Command Line Arguments
