@@ -28,8 +28,7 @@ def set_path(path):
 def print_welcome():
     print("=================================================")
     print("Av1anStaxRipWrapperRav1e")
-    print("https://github.com/Kidsnd274/Av1anStaxRipWrapper")
-    print("")
+    print("https://github.com/Kidsnd274/Av1anStaxRipWrapper\n")
     print("This script is more specialized for rav1e")
     print("Use the generic script for other encoders")
     print("=================================================")
@@ -41,7 +40,6 @@ def print_version(parser_args):
     else:
         import os
         my_env = os.environ
-        print(my_env["PATH"])
     try:
         subprocess.run("ffmpeg -version", shell=False, env=my_env)
     except FileNotFoundError:
@@ -89,6 +87,7 @@ if parser_args.version:
 
 if parser_args.input is None or parser_args.output is None or parser_args.tempdir is None:
     print("The arguments, -i, -o, -t are required to work!")
+    print("Run --help for more information")
     exit(1)
 
 input_file = parser_args.input
