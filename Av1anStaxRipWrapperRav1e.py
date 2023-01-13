@@ -2,6 +2,9 @@ import argparse
 import subprocess
 import sys
 
+# This script is more specialized for making Av1an work with rav1e.
+# Use the generic script for other encoders. https://github.com/Kidsnd274/Av1anStaxRipWrapper
+
 # Functions
 def add_argument(curr, new):
     return_string = curr
@@ -29,13 +32,11 @@ def print_version(parser_args):
         print("")
         subprocess.run("av1an --version", shell=False, env=my_env)
         print("")
-        subprocess.run("rav1e --version", shell=False, env=my_env)
     else:
         subprocess.run("ffmpeg -version", shell=False) # Assume everything is in PATH
         print("")
         subprocess.run("av1an --version", shell=False)
         print("")
-        subprocess.run("rav1e --version", shell=False)
     exit(0)
 
 # Command Line Arguments
