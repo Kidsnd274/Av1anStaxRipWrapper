@@ -62,7 +62,7 @@ Good starting command: (make sure to change **Output File Type** to `mkv`)
 "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\VapourSynth\python.exe" "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapper.py" -s "%startup_dir%" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --pix-format yuv420p10le -e rav1e --photon-noise 2 --chroma-noise --sc-downscale-height 540 -v "--quantizer 60 --speed 6 --tiles 2 --threads 2"
 ```
 
-4. Save this Encoder Profile with the name `AV1 | av1an rav1e`, and it will appear in the AV1 drop-down menu.
+1. Save this Encoder Profile with the name `AV1 | av1an`, and it will appear in the AV1 drop-down menu.
 ![image](https://user-images.githubusercontent.com/1343896/209458707-bca3edda-36af-4d3d-b4a5-899160a5e8d9.png)
 
 
