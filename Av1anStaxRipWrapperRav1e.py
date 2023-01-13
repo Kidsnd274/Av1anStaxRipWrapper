@@ -2,6 +2,9 @@ import argparse
 import subprocess
 import sys
 
+# This script is more specialized for rav1e.
+# Use the generic script for other encoders. https://github.com/Kidsnd274/Av1anStaxRipWrapper
+
 # Functions
 def add_argument(curr, new):
     return_string = curr
@@ -22,20 +25,36 @@ def set_path(path):
     environ["PATH"] = f"{str(av1an_path)};{str(rav1e_path)};{str(vp_path)};{environ['PATH']}"
     return environ
 
+def print_welcome():
+    print("=================================================")
+    print("Av1anStaxRipWrapperRav1e")
+    print("https://github.com/Kidsnd274/Av1anStaxRipWrapper\n")
+    print("This script is more specialized for rav1e")
+    print("Use the generic script for other encoders")
+    print("=================================================")
+    print("")
+
 def print_version(parser_args):
     if parser_args.staxrip_startup_dir is not None:
         my_env = set_path(parser_args.staxrip_startup_dir)
-        subprocess.run("ffmpeg -version", shell=False, env=my_env)
-        print("")
-        subprocess.run("av1an --version", shell=False, env=my_env)
-        print("")
-        subprocess.run("rav1e --version", shell=False, env=my_env)
     else:
-        subprocess.run("ffmpeg -version", shell=False) # Assume everything is in PATH
-        print("")
-        subprocess.run("av1an --version", shell=False)
-        print("")
-        subprocess.run("rav1e --version", shell=False)
+        import os
+        my_env = os.environ
+    try:
+        subprocess.run("ffmpeg -version", shell=False, env=my_env)
+    except FileNotFoundError:
+        print("ffmpeg not found!")
+    print("\n--------------------------------\n")
+    try:
+        subprocess.run("av1an --version", shell=False, env=my_env)
+    except FileNotFoundError:
+        print("Av1an not found!")
+    print("\n--------------------------------\n")
+    try:
+        subprocess.run("rav1e --version", shell=False, env=my_env)
+    except FileNotFoundError:
+        print("rav1e not found!")
+    print("\n--------------------------------\n")
     exit(0)
 
 # Command Line Arguments
@@ -61,11 +80,14 @@ parser.add_argument('--tiles', type=str, required=False, help="Number of tiles. 
 parser.add_argument('--threads', type=str, required=False, help="Set the threadpool size. If 0, will use the number of logical CPUs. rav1e will use up to this many threads.\nAdditional tiles may be needed to increase thread utilization\n[default: 0] (rav1e parameter)")
 parser_args = parser.parse_args()
 
+print_welcome()
+
 if parser_args.version:
     print_version(parser_args)
 
 if parser_args.input is None or parser_args.output is None or parser_args.tempdir is None:
     print("The arguments, -i, -o, -t are required to work!")
+    print("Run --help for more information")
     exit(1)
 
 input_file = parser_args.input
