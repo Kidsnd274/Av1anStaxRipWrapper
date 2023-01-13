@@ -74,7 +74,6 @@ The command in StaxRip used is\
 
 ## Command Line Options
 ```
-
 options:
 Av1an wrapper for StaxRip
 
