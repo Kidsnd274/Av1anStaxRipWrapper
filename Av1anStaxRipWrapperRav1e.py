@@ -2,7 +2,7 @@ import argparse
 import subprocess
 import sys
 
-# This script is more specialized for making Av1an work with rav1e.
+# This script is more specialized for rav1e.
 # Use the generic script for other encoders. https://github.com/Kidsnd274/Av1anStaxRipWrapper
 
 # Functions
@@ -24,6 +24,16 @@ def set_path(path):
     environ = os.environ
     environ["PATH"] = f"{str(av1an_path)};{str(rav1e_path)};{str(vp_path)};{environ['PATH']}"
     return environ
+
+def print_welcome():
+    print("=================================================")
+    print("Av1anStaxRipWrapperRav1e")
+    print("https://github.com/Kidsnd274/Av1anStaxRipWrapper")
+    print("")
+    print("This script is more specialized for rav1e")
+    print("Use the generic script for other encoders")
+    print("=================================================")
+    print("")
 
 def print_version(parser_args):
     if parser_args.staxrip_startup_dir is not None:
@@ -61,6 +71,8 @@ parser.add_argument('--speed', type=str, required=False, help="Speed level (0 is
 parser.add_argument('--tiles', type=str, required=False, help="Number of tiles. Tile-cols and tile-rows are overridden so that the video has at least this many tiles (rav1e parameter)")
 parser.add_argument('--threads', type=str, required=False, help="Set the threadpool size. If 0, will use the number of logical CPUs. rav1e will use up to this many threads.\nAdditional tiles may be needed to increase thread utilization\n[default: 0] (rav1e parameter)")
 parser_args = parser.parse_args()
+
+print_welcome()
 
 if parser_args.version:
     print_version(parser_args)

@@ -30,40 +30,48 @@ def set_path(path):
     svtav1_path = staxrip_path / "Apps" / "Encoders" / "SVT-AV1"
     vp_path = staxrip_path / "Apps" / "Encoders" / "Av1anStaxRipWrapper" / "VapourSynth"
     environ = os.environ
-    environ["PATH"] = f"{str(av1an_path)};{str(aomenc_path)};{str(rav1e_path)};{str(vp_path)};{environ['PATH']}"
+    environ["PATH"] = f"{str(av1an_path)};{str(aomenc_path)};{str(rav1e_path)};{str(svtav1_path)};{str(vp_path)};{environ['PATH']}"
     return environ
+
+def print_welcome():
+    print("=================================================")
+    print("Av1anStaxRipWrapper")
+    print("https://github.com/Kidsnd274/Av1anStaxRipWrapper")
+    print("=================================================")
+    print("")
 
 def print_version(parser_args):
     if parser_args.staxrip_startup_dir is not None:
         my_env = set_path(parser_args.staxrip_startup_dir)
     else:
         import os
-        environ = os.environ
-        my_env = environ["PATH"] # Assume everything is in PATH
+        my_env = os.environ
+        print(my_env["PATH"])
     try:
         subprocess.run("ffmpeg -version", shell=False, env=my_env)
     except FileNotFoundError:
         print("ffmpeg not found!")
-    print("")
+    print("\n--------------------------------\n")
     try:
         subprocess.run("av1an --version", shell=False, env=my_env)
     except FileNotFoundError:
         print("Av1an not found!")
-    print("")
+    print("\n--------------------------------\n")
     try:
         subprocess.run("aomenc --version", shell=False, env=my_env)
     except FileNotFoundError:
         print("aomenc not found!")
-    print("")
+    print("\n--------------------------------\n")
     try:
         subprocess.run("rav1e --version", shell=False, env=my_env)
     except FileNotFoundError:
         print("rav1e not found!")
-    print("")
+    print("\n--------------------------------\n")
     try:
         subprocess.run("SvtAv1EncApp", shell=False, env=my_env)
     except FileNotFoundError:
         print("SvtAv1EncApp not found!")
+    print("\n--------------------------------\n")
     exit(0)
 
 # Command Line Arguments
@@ -87,11 +95,14 @@ parser.add_argument('--set-thread-affinity', dest="set_thread_affinity", type=st
 parser.add_argument('--disable-automatic-thread-detection', dest="disable_automatic_thread_detection", action='store_true', help="Disable the wrapper's automatic thread detection")
 parser_args = parser.parse_args()
 
+print_welcome()
+
 if parser_args.version:
     print_version(parser_args)
 
 if parser_args.input is None or parser_args.output is None or parser_args.tempdir is None:
     print("The arguments, -i, -o, -t are required to work!")
+    print("Run --help for more information")
     exit(1)
 
 input_file = parser_args.input
