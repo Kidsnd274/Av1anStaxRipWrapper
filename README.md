@@ -2,7 +2,7 @@
 Python wrapper script to use Av1an with StaxRip
 
 [Av1anStaxRipWrapperRav1e](README_RAV1E.md) (rav1e specialized script README)\
-[INSTALL AND USAGE GUIDE (YouTube)](https://www.youtube.com/watch?v=lMfTwd0qDC8) for the rav1e script
+[INSTALL AND USAGE GUIDE (YouTube)](https://www.youtube.com/watch?v=lMfTwd0qDC8) for the **rav1e script**
 
 ## Contents
 - [Av1anStaxRipWrapper](#av1anstaxripwrapper)
