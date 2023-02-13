@@ -1,8 +1,8 @@
 # Av1anStaxRipWrapperRav1e
 Python wrapper script to use Av1an and rav1e with StaxRip
 
-**This script is more specialized for rav1e
-Use the [generic script](README.md) for other encoders**
+**This script is more specialized for rav1e. Use the [generic script](README.md) for other encoders.**
+
 The generic script is capable to using rav1e as well and has the capability to use any arguments that the selected encoder and Av1an allows.
 This script is less flexible but the command line arguments are neater as it is more focused on rav1e.
 
