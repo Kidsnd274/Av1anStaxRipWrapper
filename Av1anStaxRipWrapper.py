@@ -28,9 +28,11 @@ def set_path(path):
     aomenc_path = staxrip_path / "Apps" / "Encoders" / "aomenc"
     rav1e_path = staxrip_path / "Apps" / "Encoders" / "rav1e"
     svtav1_path = staxrip_path / "Apps" / "Encoders" / "SVT-AV1"
+    x264_path = staxrip_path / "Apps" / "Encoders" / "x264"
+    x265_path = staxrip_path / "Apps" / "Encoders" / "x265"
     vp_path = staxrip_path / "Apps" / "Encoders" / "Av1anStaxRipWrapper" / "VapourSynth"
     environ = os.environ
-    environ["PATH"] = f"{str(av1an_path)};{str(aomenc_path)};{str(rav1e_path)};{str(svtav1_path)};{str(vp_path)};{environ['PATH']}"
+    environ["PATH"] = f"{str(av1an_path)};{str(aomenc_path)};{str(rav1e_path)};{str(svtav1_path)};{str(x264_path)};{str(x265_path)};{str(vp_path)};{environ['PATH']}"
     return environ
 
 def print_welcome():
@@ -179,7 +181,7 @@ if parser_args.pix_format is not None:
 if parser_args.other_args is not None:
     command = add_argument(command, f"{parser_args.other_args}")
 if parser_args.ffmpeg_options is not None:
-    command = add_argument(command, -f"{parser_args.ffmpeg_options}")
+    command = add_argument(command, f"{parser_args.ffmpeg_options}")
 
 command = add_argument(command, f"-i \"{input_file}\" -o \"{output_file}\" --temp \"{tempdir}\"")
        
