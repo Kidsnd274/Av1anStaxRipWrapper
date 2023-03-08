@@ -2,7 +2,7 @@
 REM This batch script needs to be run in StaxRip\Apps\Encoders\Av1anStaxRipWrapper!
 echo.
 echo This batch script needs to be run in StaxRip\Apps\Encoders\Av1anStaxRipWrapper!
-SET PATH=..\Av1an;..\aomenc;..\rav1e;..\SVT-AV1;..\x264;..\x265;.\VapourSynth;%PATH%
+SET PATH=..\Av1an;..\aomenc;..\rav1e;..\SVT-AV1;..\x264;..\x265;..\..\Support\MKVToolNix;.\VapourSynth;%PATH%
 echo =================================================
 echo Av1anStaxRipWrapper
 echo https://github.com/Kidsnd274/Av1anStaxRipWrapper
