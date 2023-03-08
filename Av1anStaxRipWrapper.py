@@ -181,7 +181,7 @@ if parser_args.pix_format is not None:
 if parser_args.other_args is not None:
     command = add_argument(command, f"{parser_args.other_args}")
 if parser_args.ffmpeg_options is not None:
-    command = add_argument(command, f"-f {parser_args.ffmpeg_options}")
+    command = add_argument(command, f"-f \"{parser_args.ffmpeg_options}\"")
 
 command = add_argument(command, f"-i \"{input_file}\" -o \"{output_file}\" --temp \"{tempdir}\"")
        
