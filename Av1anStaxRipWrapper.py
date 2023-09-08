@@ -28,12 +28,13 @@ def set_path(path):
     aomenc_path = staxrip_path / "Apps" / "Encoders" / "aomenc"
     rav1e_path = staxrip_path / "Apps" / "Encoders" / "rav1e"
     svtav1_path = staxrip_path / "Apps" / "Encoders" / "SVT-AV1"
+    svtav1_path2 = staxrip_path / "Apps" / "Encoders" / "SvtAv1EncApp"
     x264_path = staxrip_path / "Apps" / "Encoders" / "x264"
     x265_path = staxrip_path / "Apps" / "Encoders" / "x265"
     vp_path = staxrip_path / "Apps" / "Encoders" / "Av1anStaxRipWrapper" / "VapourSynth"
     mkvmerge_path = staxrip_path / "Apps" / "Support" / "MKVToolNix"
     environ = os.environ
-    environ["PATH"] = f"{str(av1an_path)};{str(aomenc_path)};{str(rav1e_path)};{str(svtav1_path)};{str(x264_path)};{str(x265_path)};{str(vp_path)};{str(mkvmerge_path)};{environ['PATH']}"
+    environ["PATH"] = f"{str(av1an_path)};{str(aomenc_path)};{str(rav1e_path)};{str(svtav1_path)};{str(svtav1_path2)};{str(x264_path)};{str(x265_path)};{str(vp_path)};{str(mkvmerge_path)};{environ['PATH']}"
     return environ
 
 def print_welcome():
