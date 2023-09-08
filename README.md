@@ -40,7 +40,7 @@ This script also requires the `psutil` module in Python to automatically detect 
  - You can run with the `--disable-automatic-thread-detection` flag to disable this feature and requirement
 
 ## Setup
-### Portable Installation
+### Portable Installation (Recommended)
 Since Av1an requires `ffmpeg`, `aomenc` or `rav1e` or `SVT-AV1`, `VapourSynth` to be in PATH, this script can automatically help you add important folders (from StaxRip) temporarily to PATH when it's being run (for portable installation). In this way, your actual system PATH is not affected when running Av1an. However, this means that you need to install the tools in specific folders in StaxRip as the wrapper script looks for them there.
 
 Portable mode is enabled when the `-s` flag is used with the StaxRip startup directory.
