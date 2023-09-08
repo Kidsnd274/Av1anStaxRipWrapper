@@ -2,6 +2,8 @@ import argparse
 import subprocess
 import sys
 
+sys.stdout.reconfigure(encoding='utf-8')
+
 # This script allows the usage of any encoders supported by Av1an.
 # Use the -e flag to specify the encoder and make sure .exe is in the specific folders. https://github.com/Kidsnd274/Av1anStaxRipWrapper
 

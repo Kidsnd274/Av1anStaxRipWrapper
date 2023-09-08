@@ -2,6 +2,8 @@ import argparse
 import subprocess
 import sys
 
+sys.stdout.reconfigure(encoding='utf-8')
+
 # This script is more specialized for rav1e.
 # Use the generic script for other encoders. https://github.com/Kidsnd274/Av1anStaxRipWrapper
 
