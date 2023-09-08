@@ -45,15 +45,17 @@ Since Av1an requires `ffmpeg`, `aomenc` or `rav1e` or `SVT-AV1`, `VapourSynth` t
 
 Portable mode is enabled when the `-s` flag is used with the StaxRip startup directory.
 
-1. Ensure encoders, Av1an and the wrapper script are extracted in the right directories
+1. Clone this repository (or download the files) into `StaxRip\Apps\Encoders\Av1anStaxRipWrapper`
+
+2. Ensure encoders, Av1an and the wrapper script are extracted in the right directories
  - Av1an: `StaxRip\Apps\Encoders\Av1an`
  - aomenc: `StaxRip\Apps\Encoders\aomenc`
  - rav1e: `StaxRip\Apps\Encoders\rav1e`
  - SVT-AV1: `StaxRip\Apps\Encoders\SVT-AV1`
  - FFMPEG: `StaxRip\Apps\Encoders\Av1an` (moving it to an `ffmpeg` folder would interfere with StaxRip's own ffmpeg)
  - Wrapper Script: `StaxRip\Apps\Encoders\Av1anStaxRipWrapper`
-2. Run the `setup_py_vp_environment.bat` script from the Av1anStaxRipWrapper folder to install required Python modules and VapourSynth plugins
-3. Use the **Command Line** encoder profile to create an Av1an Encoder Profile
+3. Run the `setup_py_vp_environment.bat` script from the Av1anStaxRipWrapper folder to install required Python modules and VapourSynth plugins
+4. Use the **Command Line** encoder profile to create an Av1an Encoder Profile
 <img src="https://user-images.githubusercontent.com/1343896/209458682-9e42b62f-22d2-4efb-a84d-47da50c1921f.png" alt="staxrip_image" width="200"/>
 <img src="https://user-images.githubusercontent.com/1343896/209460663-fa6ac57b-ec77-48d7-b993-ba67bf0d56a1.png" alt="staxrip_image" width="500"/>
 
@@ -62,7 +64,7 @@ Good starting command: (make sure to change **Output File Type** to `mkv`)
 "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\VapourSynth\python.exe" "%startup_dir%\Apps\Encoders\Av1anStaxRipWrapper\Av1anStaxRipWrapper.py" -s "%startup_dir%" -i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp" --pix-format yuv420p10le -e rav1e --photon-noise 2 --chroma-noise --sc-downscale-height 540 -v "--quantizer 60 --speed 6 --tiles 2 --threads 2"
 ```
 
-4. Save this Encoder Profile with the name `AV1 | av1an`, and it will appear in the AV1 drop-down menu.
+5. Save this Encoder Profile with the name `AV1 | av1an`, and it will appear in the AV1 drop-down menu.
 ![image](https://user-images.githubusercontent.com/1343896/209458707-bca3edda-36af-4d3d-b4a5-899160a5e8d9.png)
 
 
