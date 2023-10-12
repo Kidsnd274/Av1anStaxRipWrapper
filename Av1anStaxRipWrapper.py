@@ -100,7 +100,6 @@ def get_worker_override():
         except BaseException as error:
             print("[ERROR] Failed to read override-workers.json. Skipping...")
             print(error)
-            return (False, 0, 0)
     return (False, 0, 0)
 
 def set_worker_override(): # Function to create override-workers.json
