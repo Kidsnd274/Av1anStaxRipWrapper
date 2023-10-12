@@ -100,6 +100,7 @@ def get_worker_override():
                 if not isinstance(workers, int) or not isinstance(affinity, int):
                     raise ValueError("[ERROR] override-workers.json is not formatted correctly")
                 print(f"[INFO] Overriding CPU Workers = {workers} and CPU Thread Affinity = {affinity}")
+                print("[INFO] Automatic Thread Detection Disabled")
                 return (True, workers, affinity)
         except Exception as error:
             print("[ERROR] Failed to read override-workers.json. Skipping...")
@@ -151,6 +152,8 @@ override_workers, cpu_workers, cpu_thread_affinity = get_worker_override()
 
 if not parser_args.disable_automatic_thread_detection and parser_args.workers is None and parser_args.set_thread_affinity is None and not override_workers:
     thread_detection = True
+else:
+    print("[INFO] Automatic Thread Detection Disabled")
 
 if thread_detection: # Checking for new Intel architecture
     import psutil
@@ -158,7 +161,8 @@ if thread_detection: # Checking for new Intel architecture
     physical_count = psutil.cpu_count(logical = False)
     if (logical_count / physical_count) % 1 != 0:
         thread_detection = False  # Intel CPU detected
-        print("New Intel CPU architecture with performance and efficiency cores detected!\nNot passing thread detection to av1an...\n")
+        print("[INFO] New Intel CPU architecture with P and E cores detected! Not passing thread detection to av1an...\n")
+        print("[INFO] Automatic Thread Detection Disabled")
     
 if thread_detection: # Checking for Hyperthreading or SMT
     import psutil
