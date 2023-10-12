@@ -97,7 +97,7 @@ def get_worker_override():
                 config = json.load(f)
                 workers = config.get('cpu_workers')
                 affinity = config.get('cpu_thread_affinity')
-                print(f"[INFO] Overriding CPU Workers as {workers} and CPU Thread Affinity as {affinity}")
+                print(f"[INFO] Overriding CPU Workers = {workers} and CPU Thread Affinity = {affinity}")
                 return (True, workers, affinity)
         except BaseException as error:
             print("[ERROR] Failed to read override-workers.json. Skipping...")
