@@ -96,9 +96,9 @@ def get_worker_override():
                 workers = config.get('cpu_workers')
                 affinity = config.get('cpu_thread_affinity')
                 if workers is None or affinity is None:
-                    raise KeyError("override-workers.json is does not contain cpu_workers or cpu_thread_affinity")
-                if type(workers) != int or type(affinity) != int:
-                    raise ValueError("override-workers.json is not formatted correctly")
+                    raise KeyError("[ERROR] override-workers.json is does not contain cpu_workers or cpu_thread_affinity")
+                if not isinstance(workers, int) or not isinstance(affinity, int):
+                    raise ValueError("[ERROR] override-workers.json is not formatted correctly")
                 print(f"[INFO] Overriding CPU Workers = {workers} and CPU Thread Affinity = {affinity}")
                 return (True, workers, affinity)
         except Exception as error:
