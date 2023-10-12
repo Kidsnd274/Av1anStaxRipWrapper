@@ -1,4 +1,6 @@
 import argparse
+import os
+import pathlib
 import subprocess
 import sys
 
@@ -23,8 +25,6 @@ def add_argument(curr, new):
     return return_string
 
 def set_path(path):
-    import os
-    import pathlib
     staxrip_path = pathlib.Path(path)
     av1an_path = staxrip_path / "Apps" / "Encoders" / "Av1an"
     aomenc_path = staxrip_path / "Apps" / "Encoders" / "aomenc"
@@ -50,7 +50,6 @@ def print_version(parser_args):
     if parser_args.staxrip_startup_dir is not None:
         my_env = set_path(parser_args.staxrip_startup_dir)
     else:
-        import os
         my_env = os.environ
     try:
         subprocess.run("ffmpeg -version", shell=False, env=my_env)
@@ -82,6 +81,32 @@ def print_version(parser_args):
         print("SvtAv1EncApp not found!")
     print("\n--------------------------------\n")
     exit(0)
+    
+def get_worker_override():
+    # Check for override-workers.json
+    # eg. cpu_workers = 2, cpu_thread_affinity = 2
+    ## If not found, return False, 0, 0
+    ## If found, return True, workers, cpu_thread_affinity
+    local_app_data_path = pathlib.Path(os.getenv('LOCALAPPDATA'))
+    config_path = local_app_data_path / "Av1anStaxRipWrapper" / "override-workers.json"
+    if config_path.is_file():
+        print("[INFO] Found override-workers.json")
+        import json
+        try:
+            with config_path.open() as f:
+                config = json.load(f)
+                workers = config.get('cpu_workers')
+                affinity = config.get('cpu_thread_affinity')
+                print(f"[INFO] Overriding CPU Workers as {workers} and CPU Thread Affinity as {affinity}")
+                return (True, workers, affinity)
+        except BaseException as error:
+            print("[ERROR] Failed to read override-workers.json. Skipping...")
+            print(error)
+            return (False, 0, 0)
+    return (False, 0, 0)
+
+def set_worker_override(): # Function to create override-workers.json
+    pass
 
 # Command Line Arguments
 parser = argparse.ArgumentParser(description="Av1an wrapper for StaxRip")
@@ -121,7 +146,9 @@ tempdir = parser_args.tempdir
 
 # Automatic Thread Detection
 thread_detection = False
-if not parser_args.disable_automatic_thread_detection and parser_args.workers is None and parser_args.set_thread_affinity is None:
+override_workers, cpu_workers, cpu_thread_affinity = get_worker_override()
+
+if not parser_args.disable_automatic_thread_detection and parser_args.workers is None and parser_args.set_thread_affinity is None and not override_workers:
     thread_detection = True
 
 if thread_detection: # Checking for new Intel architecture
@@ -162,7 +189,7 @@ command = av1an_exec
 command = add_argument(command, "--verbose -y --resume -a=\"-an\"")
 
 # Thread arguments
-if thread_detection:
+if thread_detection or override_workers:
     command = add_argument(command, f"--workers {cpu_workers} --set-thread-affinity {cpu_thread_affinity}")
 else:
     if parser_args.workers is not None:
@@ -200,5 +227,5 @@ else:
 
 if process.returncode != 0:
     print(process.stderr)
-    print("Error occurred when transcoding with av1an. Check logs")
+    print("[ERROR] Error occurred when transcoding with av1an. Check logs")
     exit(1)
