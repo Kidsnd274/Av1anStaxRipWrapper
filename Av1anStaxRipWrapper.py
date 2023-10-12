@@ -85,8 +85,6 @@ def print_version(parser_args):
 def get_worker_override():
     # Check for override-workers.json
     # eg. cpu_workers = 2, cpu_thread_affinity = 2
-    ## If not found, return False, 0, 0
-    ## If found, return True, workers, cpu_thread_affinity
     local_app_data_path = pathlib.Path(os.getenv('LOCALAPPDATA'))
     config_path = local_app_data_path / "Av1anStaxRipWrapper" / "override-workers.json"
     if config_path.is_file():
