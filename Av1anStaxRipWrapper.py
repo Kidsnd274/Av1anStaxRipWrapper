@@ -13,6 +13,10 @@ sys.stdout.reconfigure(encoding='utf-8')
 # Add a check to see what encoders are available. Make a nice opening message saying
 # Av1anStaxRip, Supported Encoders....
 # FileNotFoundError is the error when using subprocess.run
+# TODO: Update docs on Override Workers and Affinity per Local Computer (for networked use-case)
+# TODO: Finish set_worker_override() (including command line option)
+# TODO: Allow separate override for workers and affinity
+# TODO: Force close av1an when StaxRip terminates the script
 
 
 # Functions
