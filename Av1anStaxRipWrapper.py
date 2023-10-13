@@ -89,7 +89,7 @@ def print_version(parser_args):
 def get_worker_override():
     # Check for override-workers.json
     # eg. cpu_workers = 2, cpu_thread_affinity = 2
-    local_app_data_path = pathlib.Path(os.getenv('LOCALAPPDATA'))
+    local_app_data_path = pathlib.Path(str(os.getenv('LOCALAPPDATA')))
     config_path = local_app_data_path / "Av1anStaxRipWrapper" / "override-workers.json"
     if config_path.is_file():
         print("[INFO] Found override-workers.json")
@@ -103,8 +103,7 @@ def get_worker_override():
                     raise KeyError("[ERROR] override-workers.json is does not contain cpu_workers or cpu_thread_affinity")
                 if not isinstance(workers, int) or not isinstance(affinity, int):
                     raise ValueError("[ERROR] override-workers.json is not formatted correctly")
-                print(f"[INFO] Overriding CPU Workers = {workers} and CPU Thread Affinity = {affinity}")
-                print("[INFO] Automatic Thread Detection Disabled")
+                print(f"[INFO] Overriding CPU Workers = {str(workers)} and CPU Thread Affinity = {str(affinity)}")
                 return (True, workers, affinity)
         except Exception as error:
             print("[ERROR] Failed to read override-workers.json. Skipping...")
@@ -112,7 +111,50 @@ def get_worker_override():
     return (False, 0, 0)
 
 def set_worker_override(): # Function to create override-workers.json
-    pass
+    print("Setting override workers and thread affinity for local computer...")
+    print("")
+    print("How many workers do you want to spawn? (Put 0 for disabled)")
+    while True:
+        workers = input("cpu_workers = ")
+        try:
+            workers_int = int(workers)
+            if workers_int < 0:
+                raise ValueError
+        except ValueError:
+            print("Invalid input, please enter a positive number")
+            continue
+        else:
+            break
+    print("How many threads do you want to pin each worker to? (Put 0 for disabled)")
+    while True:
+        affinity = input("cpu_thread_affinity = ")
+        try:
+            affinity_int = int(affinity)
+            if affinity_int < 0:
+                raise ValueError
+        except ValueError:
+            print("Invalid input, please enter a positive number")
+            continue
+        else:
+            break
+    
+    config = {}
+    if workers_int != 0:
+        config['cpu_workers'] = workers_int
+    if affinity_int != 0:
+        config['cpu_thread_affinity'] = affinity_int
+    
+    import json
+    local_app_data_path = pathlib.Path(str(os.getenv('LOCALAPPDATA')))
+    config_path = local_app_data_path / "Av1anStaxRipWrapper" / "override-workers.json"
+    
+    # Creating proper folders and files
+    config_path.parent.mkdir(parents=False, exist_ok=True)
+    config_path.touch(exist_ok=True)
+    with open(config_path) as f:
+        json.dump(config, f, indent=4)
+    print(f"Successfully written to {str(config_path)}")
+    exit()
 
 # Command Line Arguments
 parser = argparse.ArgumentParser(description="Av1an wrapper for StaxRip")
