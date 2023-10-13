@@ -10,11 +10,11 @@ sys.stdout.reconfigure(encoding='utf-8')
 # Use the -e flag to specify the encoder and make sure .exe is in the specific folders. https://github.com/Kidsnd274/Av1anStaxRipWrapper
 
 
+# Developer Notes:
 # Add a check to see what encoders are available. Make a nice opening message saying
 # Av1anStaxRip, Supported Encoders....
 # FileNotFoundError is the error when using subprocess.run
 # TODO: Update docs on Override Workers and Affinity per Local Computer (for networked use-case)
-# TODO: Finish set_worker_override() (including command line option)
 # TODO: Allow separate override for workers and affinity
 # TODO: Force close av1an when StaxRip terminates the script
 
@@ -176,9 +176,14 @@ parser.add_argument('--pix-format', dest="pix_format", type=str, required=False,
 parser.add_argument('--workers', type=str, required=False, help="Number of workers to spawn [0 = automatic] (Av1an Paramter)")
 parser.add_argument('--set-thread-affinity', dest="set_thread_affinity", type=str, required=False, help="Pin each worker to a specific set of threads of this size (disabled by default) (Av1an parameter)")
 parser.add_argument('--disable-automatic-thread-detection', dest="disable_automatic_thread_detection", action='store_true', help="Disable the wrapper's automatic thread detection")
+parser.add_argument('--set-worker-override', dest="override_mode", action='store_true', help="Set the override workers count and thread affinity count for local computer")
 parser_args = parser.parse_args()
 
 print_welcome()
+
+if parser_args.override_mode:
+    set_worker_override()
+    exit()
 
 if parser_args.version:
     print_version(parser_args)
