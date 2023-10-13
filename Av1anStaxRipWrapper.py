@@ -151,7 +151,7 @@ def set_worker_override(): # Function to create override-workers.json
     # Creating proper folders and files
     config_path.parent.mkdir(parents=False, exist_ok=True)
     config_path.touch(exist_ok=True)
-    with open(config_path) as f:
+    with config_path.open('w') as f:
         json.dump(config, f, indent=4)
     print(f"Successfully written to {str(config_path)}")
     exit()
