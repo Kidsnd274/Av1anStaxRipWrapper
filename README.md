@@ -175,7 +175,7 @@ Starting av1an... Check new console window for progress
 ```
 
 ### Structure of override-workers.json
-The json file stores two keys for worker count and thread affinity. (at the moment both keys must exist) The values must be in integers.
+The json file stores two keys for worker count and thread affinity (at the moment both keys must exist). The values must be in integers.
 Example:
 ```
 {
