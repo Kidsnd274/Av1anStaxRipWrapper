@@ -1,4 +1,6 @@
 import argparse
+import os
+import pathlib
 import subprocess
 import sys
 
@@ -8,9 +10,12 @@ sys.stdout.reconfigure(encoding='utf-8')
 # Use the -e flag to specify the encoder and make sure .exe is in the specific folders. https://github.com/Kidsnd274/Av1anStaxRipWrapper
 
 
+# Developer Notes:
 # Add a check to see what encoders are available. Make a nice opening message saying
 # Av1anStaxRip, Supported Encoders....
 # FileNotFoundError is the error when using subprocess.run
+# TODO: Allow separate override for workers and affinity
+# TODO: Force close av1an when StaxRip terminates the script
 
 
 # Functions
@@ -23,8 +28,6 @@ def add_argument(curr, new):
     return return_string
 
 def set_path(path):
-    import os
-    import pathlib
     staxrip_path = pathlib.Path(path)
     av1an_path = staxrip_path / "Apps" / "Encoders" / "Av1an"
     aomenc_path = staxrip_path / "Apps" / "Encoders" / "aomenc"
@@ -50,7 +53,6 @@ def print_version(parser_args):
     if parser_args.staxrip_startup_dir is not None:
         my_env = set_path(parser_args.staxrip_startup_dir)
     else:
-        import os
         my_env = os.environ
     try:
         subprocess.run("ffmpeg -version", shell=False, env=my_env)
@@ -82,6 +84,76 @@ def print_version(parser_args):
         print("SvtAv1EncApp not found!")
     print("\n--------------------------------\n")
     exit(0)
+    
+def get_worker_override():
+    # Check for override-workers.json
+    # eg. cpu_workers = 2, cpu_thread_affinity = 2
+    local_app_data_path = pathlib.Path(str(os.getenv('LOCALAPPDATA')))
+    config_path = local_app_data_path / "Av1anStaxRipWrapper" / "override-workers.json"
+    if config_path.is_file():
+        print("[INFO] Found override-workers.json")
+        import json
+        try:
+            with config_path.open() as f:
+                config = json.load(f)
+                workers = config.get('cpu_workers')
+                affinity = config.get('cpu_thread_affinity')
+                if workers is None or affinity is None:
+                    raise KeyError("[ERROR] override-workers.json is does not contain cpu_workers or cpu_thread_affinity")
+                if not isinstance(workers, int) or not isinstance(affinity, int):
+                    raise ValueError("[ERROR] override-workers.json is not formatted correctly")
+                print(f"[INFO] Overriding CPU Workers = {str(workers)} and CPU Thread Affinity = {str(affinity)}")
+                return (True, workers, affinity)
+        except Exception as error:
+            print("[ERROR] Failed to read override-workers.json. Skipping...")
+            print(error)
+    return (False, 0, 0)
+
+def set_worker_override(): # Function to create override-workers.json
+    print("Setting override workers and thread affinity for local computer...")
+    print("")
+    print("How many workers do you want to spawn? (Put 0 for disabled)")
+    while True:
+        workers = input("cpu_workers = ")
+        try:
+            workers_int = int(workers)
+            if workers_int < 0:
+                raise ValueError
+        except ValueError:
+            print("Invalid input, please enter a positive number")
+            continue
+        else:
+            break
+    print("How many threads do you want to pin each worker to? (Put 0 for disabled)")
+    while True:
+        affinity = input("cpu_thread_affinity = ")
+        try:
+            affinity_int = int(affinity)
+            if affinity_int < 0:
+                raise ValueError
+        except ValueError:
+            print("Invalid input, please enter a positive number")
+            continue
+        else:
+            break
+    
+    config = {}
+    if workers_int != 0:
+        config['cpu_workers'] = workers_int
+    if affinity_int != 0:
+        config['cpu_thread_affinity'] = affinity_int
+    
+    import json
+    local_app_data_path = pathlib.Path(str(os.getenv('LOCALAPPDATA')))
+    config_path = local_app_data_path / "Av1anStaxRipWrapper" / "override-workers.json"
+    
+    # Creating proper folders and files
+    config_path.parent.mkdir(parents=False, exist_ok=True)
+    config_path.touch(exist_ok=True)
+    with config_path.open('w') as f:
+        json.dump(config, f, indent=4)
+    print(f"Successfully written to {str(config_path)}")
+    exit()
 
 # Command Line Arguments
 parser = argparse.ArgumentParser(description="Av1an wrapper for StaxRip")
@@ -103,9 +175,14 @@ parser.add_argument('--pix-format', dest="pix_format", type=str, required=False,
 parser.add_argument('--workers', type=str, required=False, help="Number of workers to spawn [0 = automatic] (Av1an Paramter)")
 parser.add_argument('--set-thread-affinity', dest="set_thread_affinity", type=str, required=False, help="Pin each worker to a specific set of threads of this size (disabled by default) (Av1an parameter)")
 parser.add_argument('--disable-automatic-thread-detection', dest="disable_automatic_thread_detection", action='store_true', help="Disable the wrapper's automatic thread detection")
+parser.add_argument('--set-worker-override', dest="override_mode", action='store_true', help="Set the override workers count and thread affinity count for local computer")
 parser_args = parser.parse_args()
 
 print_welcome()
+
+if parser_args.override_mode:
+    set_worker_override()
+    exit()
 
 if parser_args.version:
     print_version(parser_args)
@@ -121,8 +198,12 @@ tempdir = parser_args.tempdir
 
 # Automatic Thread Detection
 thread_detection = False
-if not parser_args.disable_automatic_thread_detection and parser_args.workers is None and parser_args.set_thread_affinity is None:
+override_workers, cpu_workers, cpu_thread_affinity = get_worker_override()
+
+if not parser_args.disable_automatic_thread_detection and parser_args.workers is None and parser_args.set_thread_affinity is None and not override_workers:
     thread_detection = True
+else:
+    print("[INFO] Automatic Thread Detection Disabled")
 
 if thread_detection: # Checking for new Intel architecture
     import psutil
@@ -130,7 +211,8 @@ if thread_detection: # Checking for new Intel architecture
     physical_count = psutil.cpu_count(logical = False)
     if (logical_count / physical_count) % 1 != 0:
         thread_detection = False  # Intel CPU detected
-        print("New Intel CPU architecture with performance and efficiency cores detected!\nNot passing thread detection to av1an...\n")
+        print("[INFO] New Intel CPU architecture with P and E cores detected! Not passing thread detection to av1an...\n")
+        print("[INFO] Automatic Thread Detection Disabled")
     
 if thread_detection: # Checking for Hyperthreading or SMT
     import psutil
@@ -162,7 +244,7 @@ command = av1an_exec
 command = add_argument(command, "--verbose -y --resume -a=\"-an\"")
 
 # Thread arguments
-if thread_detection:
+if thread_detection or override_workers:
     command = add_argument(command, f"--workers {cpu_workers} --set-thread-affinity {cpu_thread_affinity}")
 else:
     if parser_args.workers is not None:
@@ -200,5 +282,5 @@ else:
 
 if process.returncode != 0:
     print(process.stderr)
-    print("Error occurred when transcoding with av1an. Check logs")
+    print("[ERROR] Error occurred when transcoding with av1an. Check logs")
     exit(1)

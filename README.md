@@ -10,10 +10,14 @@ Python wrapper script to use Av1an with StaxRip
   - [Usage](#usage)
   - [Requirements](#requirements)
   - [Setup](#setup)
-    - [Portable Installation](#portable-installation)
+    - [Portable Installation (Recommended)](#portable-installation-recommended)
     - [Alternative Installation (install tools to system PATH)](#alternative-installation-install-tools-to-system-path)
   - [Command Line Options](#command-line-options)
   - [Automatic Thread Detection](#automatic-thread-detection)
+  - [Override Worker Count and Threads Per Local Machine](#override-worker-count-and-threads-per-local-machine)
+    - [Setting the override worker count](#setting-the-override-worker-count)
+    - [Check to see if it's working](#check-to-see-if-its-working)
+    - [Structure of override-workers.json](#structure-of-override-workersjson)
 
 ## Usage
 This script makes use of the Command Line option in StaxRip. There are some required arguments needed in the command that allows Av1an to work with StaxRip. Namely `-i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp"`. `-s "%startup_dir%"` is needed if you want a portable installation. Portable installation is described in more detail at the [Setup](#setup) section.
@@ -116,6 +120,8 @@ optional arguments:
                         parameter)
   --disable-automatic-thread-detection
                         Disable the wrapper's automatic thread detection
+  --set-worker-override
+                        Set the override workers count and thread affinity count for local computer
 ```
 
 ## Automatic Thread Detection
@@ -140,3 +146,40 @@ Intel i5-6600K
 If your system uses an Intel 12th Gen chip and above (with the new hybrid architecture with P-cores and E-cores), this feature is disabled.
 
 If you do not want to use this feature, you can use the `--disable-automatic-thread-detection` flag or any of the Threading parameters under [Command Line Options](#command-line-options). Using any the Threading parameters would disable this feature.
+
+## Override Worker Count and Threads Per Local Machine
+When using StaxRip in a networked environment (where multiple computers access the same StaxRip install), you might want to override the Automatic Thread Detection feature for some computers, but not affect other machines. This feature allows you to do so without modifying the command line option, by storing a configuration file in a local computer.
+
+* Note that this will override the `--workers` and `--set-thread-affinity` flags for the script. If you include these flags in the `--other-args` flag, both of them will be sent to Av1an. Not sure what will happen there but you are welcome to find out.
+
+### Setting the override worker count
+To set the override feature, run the script with the `--set-worker-override` flag.
+```
+python Av1anStaxRipWrapper.py --set-worker-override
+```
+Follow the instructions shown in the cmd window and the script should store a configuration file in this location. `%LOCALAPPDATA%\Av1anStaxRipWrapper\override-workers.json`
+
+### Check to see if it's working
+The next time a job is being run, the script will show in its logs that the override file is found. For example:
+```
+=================================================
+Av1anStaxRipWrapper
+https://github.com/Kidsnd274/Av1anStaxRipWrapper
+=================================================
+[INFO] Found override-workers.json
+[INFO] Overriding CPU Workers = 4 and CPU Thread Affinity = 2
+[INFO] Automatic Thread Detection Disabled
+THREADING INFORMATION:
+  Automatic Thread Detection: DISABLED
+Starting av1an... Check new console window for progress
+```
+
+### Structure of override-workers.json
+The json file stores two keys for worker count and thread affinity. (at the moment both keys must exist) The values must be in integers.
+Example:
+```
+{
+    "cpu_workers": 4,
+    "cpu_thread_affinity": 4
+}
+```
