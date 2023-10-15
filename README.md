@@ -164,7 +164,7 @@ Av1anStaxRipWrapper
 https://github.com/Kidsnd274/Av1anStaxRipWrapper
 =================================================
 [INFO] Found override-workers.json
-[INFO] Overriding CPU Workers = 4 and CPU Thread Affinity = 4
+[INFO] Overriding CPU Workers = 4 and CPU Thread Affinity = 2
 [INFO] Automatic Thread Detection Disabled
 THREADING INFORMATION:
   Automatic Thread Detection: DISABLED
