@@ -149,6 +149,8 @@ If you do not want to use this feature, you can use the `--disable-automatic-thr
 ## Override Worker Count and Threads Per Local Machine
 When using StaxRip in a networked environment (where multiple computers access the same StaxRip install), you might want to override the Automatic Thread Detection feature for some computers, but not affect other machines. This feature allows you to do so without modifying the command line option, by storing a configuration file in a local computer.
 
+* Note that this will override the `--workers` and `--set-thread-affinity` flags for the script. If you include these flags in the `--other-args` flag, both of them will be sent to Av1an. Not sure what will happen there but you are welcome to find out.
+
 ### Setting the override worker count
 To set the override feature, run the script with the `--set-worker-override` flag.
 ```
