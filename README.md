@@ -17,6 +17,7 @@ Python wrapper script to use Av1an with StaxRip
   - [Override Worker Count and Threads Per Local Machine](#override-worker-count-and-threads-per-local-machine)
     - [Setting the override worker count](#setting-the-override-worker-count)
     - [Check to see if it's working](#check-to-see-if-its-working)
+    - [Structure of override-workers.json](#structure-of-override-workersjson)
 
 ## Usage
 This script makes use of the Command Line option in StaxRip. There are some required arguments needed in the command that allows Av1an to work with StaxRip. Namely `-i "%source_file%" -o "%encoder_out_file%" -t "%temp_dir%av1an_temp"`. `-s "%startup_dir%"` is needed if you want a portable installation. Portable installation is described in more detail at the [Setup](#setup) section.
@@ -156,7 +157,7 @@ To set the override feature, run the script with the `--set-worker-override` fla
 ```
 python Av1anStaxRipWrapper.py --set-worker-override
 ```
-Follow the instructions shown in the cmd window and the script should store a configuration file in this location. `%userprofile%\Av1anStaxRipWrapper\override-workers.json`
+Follow the instructions shown in the cmd window and the script should store a configuration file in this location. `%LOCALAPPDATA%\Av1anStaxRipWrapper\override-workers.json`
 
 ### Check to see if it's working
 The next time a job is being run, the script will show in its logs that the override file is found. For example:
@@ -171,4 +172,14 @@ https://github.com/Kidsnd274/Av1anStaxRipWrapper
 THREADING INFORMATION:
   Automatic Thread Detection: DISABLED
 Starting av1an... Check new console window for progress
+```
+
+### Structure of override-workers.json
+The json file stores two keys for worker count and thread affinity. (at the moment both keys must exist) The values must be in integers.
+Example:
+```
+{
+    "cpu_workers": 4,
+    "cpu_thread_affinity": 4
+}
 ```
